@@ -14,6 +14,13 @@
 - IAM Usage report can be download via IAM credential report.
 
 ## Config
+- Basicly using AWS Config to track resources's changes.
+- 
+
+## VPC
+- Network ACL is stateless, which means it need both inbound and outbound rules for traffic
+- Security Groups is stateful, which mean it only need the rule to initiate the request, no need to have a rule for the returning traffic.
 
 ## Other
 - IAM role is needed to access Dynamo DB tables
+- Root Account in Org should contain a default SCP that allow everything and applies to all OUs.
