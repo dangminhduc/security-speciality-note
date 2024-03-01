@@ -13,6 +13,7 @@
 
 ## IAM
 - IAM Usage report can be download via IAM credential report.
+- Using IAM Access Advisor or Access Management Access Analyzer to see what services have been used to not used for a period of time
 
 ## Config
 - Basicly using AWS Config to track resources's changes.
@@ -33,3 +34,8 @@
   - App client ID
   - App client Secret
   - List of Scopes
+- Config AD with AWS
+  - Config AWS as the relying party in AD Federation services -> AWS STS
+  - Config custom claim rules to issue and transform claims between claims provider(AD) and relying parties(STS)
+  - Create custom rule uses regular expressions to transform each of the group memberships of the form AWS-<Account Number>-<Role Name> into in the IAM role ARN, IAM federation provider ARN form AWS expects.
+- If you are developing an application using the Kinesis Client Library (KCL), your policy must include permissions for Amazon DynamoDB and Amazon CloudWatch; the KCL uses DynamoDB to track state information for the application, and CloudWatch to send KCL metrics to CloudWatch on your behalf.
