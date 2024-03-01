@@ -6,6 +6,7 @@
   - For data with size under 4KB, it can be encrypt directly
   - For data with size above 4KB, envelop encryption must be use. And for envelope encryption, the plain text data is used.
   https://aws.amazon.com/blogs/security/how-to-encrypt-and-decrypt-your-data-with-the-aws-encryption-cli/
+- Auto rotation of KMS key is fixed at 365 days and can not be changed
 
 ## Network
 - Intrustion Dectection System: should be using a custom solution on the marketplaces
@@ -15,7 +16,11 @@
 
 ## Config
 - Basicly using AWS Config to track resources's changes.
-- 
+- Custom config rule can be trigger via resource's change events or periodically at maximum interval of 1 hour
+
+## Cognito
+- Identity Pools can be use to give unauthenticated user to access AWS resources
+- Captcha can be enable via Auth Challenge Lambda Trigger
 
 ## VPC
 - Network ACL is stateless, which means it need both inbound and outbound rules for traffic
@@ -24,3 +29,7 @@
 ## Other
 - IAM role is needed to access Dynamo DB tables
 - Root Account in Org should contain a default SCP that allow everything and applies to all OUs.
+- To Authenticate with 3rd party IdP, we need 3 things:
+  - App client ID
+  - App client Secret
+  - List of Scopes
