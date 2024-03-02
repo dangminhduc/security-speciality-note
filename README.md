@@ -14,6 +14,8 @@
 ## IAM
 - IAM Usage report can be download via IAM credential report.
 - Using IAM Access Advisor or Access Management Access Analyzer to see what services have been used to not used for a period of time
+- ExternalId is a unique identifier that might be required when you assume a role in another account. If the administrator of the account to which the role belongs provided you with an external ID, then provide that value in the ExternalId parameter. This value can be any string, such as a passphrase or account number. A cross-account role is usually set up to trust everyone in an account. Therefore, the administrator of the trusting account might send an external ID to the administrator of the trusted account. That way, only someone with the ID can assume the role, rather than everyone in the account.
+- 
 
 ## Config
 - Basicly using AWS Config to track resources's changes.
@@ -39,3 +41,4 @@
   - Config custom claim rules to issue and transform claims between claims provider(AD) and relying parties(STS)
   - Create custom rule uses regular expressions to transform each of the group memberships of the form AWS-<Account Number>-<Role Name> into in the IAM role ARN, IAM federation provider ARN form AWS expects.
 - If you are developing an application using the Kinesis Client Library (KCL), your policy must include permissions for Amazon DynamoDB and Amazon CloudWatch; the KCL uses DynamoDB to track state information for the application, and CloudWatch to send KCL metrics to CloudWatch on your behalf.
+- AD connection from AWS Managed AD to on-premise node can be encrypted by using LDAP over SSL(LDAPS).
