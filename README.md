@@ -2,11 +2,24 @@
 
 ## KMS
 - Customer Managed Key(CMK) gets rotated automatically every 365 days
-- To encrypt data with KMS
+- To encrypt data with KMS (using AWS CLI)
   - For data with size under 4KB, it can be encrypt directly
   - For data with size above 4KB, envelop encryption must be use. And for envelope encryption, the plain text data is used.
   https://aws.amazon.com/blogs/security/how-to-encrypt-and-decrypt-your-data-with-the-aws-encryption-cli/
+- To encrypt data bigger than 4KB(for data below 4KB, you can use Encrypt API directly) (using API)
+  - Use GenerateDataKeyWithoutPlaintext API to create data key
+  - Use Decrypt API to decrypt the data key, then use the plaintext key to encrypt the data.
 - Auto rotation of KMS key is fixed at 365 days and can not be changed
+- To change the expiration of KMS key that use extenal material, you need to reimport the same key material and specify a new expiration date.
+- Step To import key material
+  - Create a KMS key with no key material(Origin set to EXTERNAL)
+  - Download the wrapping public key and import token(valid only for 24 hours)
+  - Encrypt the key material using the download public key and the wrapping algorithm that you specified.
+  - Import the key material
+    - Specify an expiration time if needed
+- Alias must be unique in  the AWS account and region
+  - To simplify the code that runs in multiple regions, you can use the same alias name but point to a diffent CMK in each region.
+- 
 
 ## Network
 - Intrustion Dectection System: should be using a custom solution on the marketplaces
@@ -39,6 +52,11 @@
 - Config AD with AWS
   - Config AWS as the relying party in AD Federation services -> AWS STS
   - Config custom claim rules to issue and transform claims between claims provider(AD) and relying parties(STS)
+
   - Create custom rule uses regular expressions to transform each of the group memberships of the form AWS-<Account Number>-<Role Name> into in the IAM role ARN, IAM federation provider ARN form AWS expects.
 - If you are developing an application using the Kinesis Client Library (KCL), your policy must include permissions for Amazon DynamoDB and Amazon CloudWatch; the KCL uses DynamoDB to track state information for the application, and CloudWatch to send KCL metrics to CloudWatch on your behalf.
 - AD connection from AWS Managed AD to on-premise node can be encrypted by using LDAP over SSL(LDAPS).
+- To reset password of a Windows Server EC2 instancez, you can
+  - Online: Use System Manager Run Command to run AWSSupport-RunEC2RescueForWindowsTool command document
+  - Offline: Use Systems Manager Automation AWSSupport-ResetAccess
+    - The automation document will create a new instance and attach the original EBS volume create a new password. Then it will create a new AMI, then you can launch a new instance from it.
