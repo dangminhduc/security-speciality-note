@@ -19,7 +19,7 @@
     - Specify an expiration time if needed
 - Alias must be unique in  the AWS account and region
   - To simplify the code that runs in multiple regions, you can use the same alias name but point to a diffent CMK in each region.
-- 
+- Data key caching stores data keys and related cryptographic material in a cache. When you encrypt or decrypt data, the AWS Encryption SDK looks for a matching data key in the cache. If it finds a match, it uses the cached data key rather than generating a new one. Data key caching can improve performance, reduce cost, and help you stay within service limits as your application scales. 
 
 ## Network
 - Intrustion Dectection System: should be using a custom solution on the marketplaces
