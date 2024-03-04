@@ -20,6 +20,7 @@
 - Alias must be unique in  the AWS account and region
   - To simplify the code that runs in multiple regions, you can use the same alias name but point to a diffent CMK in each region.
 - Data key caching stores data keys and related cryptographic material in a cache. When you encrypt or decrypt data, the AWS Encryption SDK looks for a matching data key in the cache. If it finds a match, it uses the cached data key rather than generating a new one. Data key caching can improve performance, reduce cost, and help you stay within service limits as your application scales. 
+- KMS has SignAPI that create a digital signature for a message a using the private key in an asynmetric CMK
 
 ## Network
 - Intrustion Dectection System: should be using a custom solution on the marketplaces
@@ -52,11 +53,12 @@
 - Config AD with AWS
   - Config AWS as the relying party in AD Federation services -> AWS STS
   - Config custom claim rules to issue and transform claims between claims provider(AD) and relying parties(STS)
-
   - Create custom rule uses regular expressions to transform each of the group memberships of the form AWS-<Account Number>-<Role Name> into in the IAM role ARN, IAM federation provider ARN form AWS expects.
 - If you are developing an application using the Kinesis Client Library (KCL), your policy must include permissions for Amazon DynamoDB and Amazon CloudWatch; the KCL uses DynamoDB to track state information for the application, and CloudWatch to send KCL metrics to CloudWatch on your behalf.
 - AD connection from AWS Managed AD to on-premise node can be encrypted by using LDAP over SSL(LDAPS).
 - To reset password of a Windows Server EC2 instancez, you can
   - Online: Use System Manager Run Command to run AWSSupport-RunEC2RescueForWindowsTool command document
   - Offline: Use Systems Manager Automation AWSSupport-ResetAccess
+- GuardDuty can perform an assetment of network communication and produce "CryptoCurrency:EC2/BitcoinTool.B" finding when an EC2 is querying an IP that associate with Bitcoin
     - The automation document will create a new instance and attach the original EBS volume create a new password. Then it will create a new AMI, then you can launch a new instance from it.
+- You can use groups to create a collection of users in a user pool, then set the permission for those users
