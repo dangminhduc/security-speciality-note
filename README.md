@@ -21,6 +21,20 @@
   - To simplify the code that runs in multiple regions, you can use the same alias name but point to a diffent CMK in each region.
 - Data key caching stores data keys and related cryptographic material in a cache. When you encrypt or decrypt data, the AWS Encryption SDK looks for a matching data key in the cache. If it finds a match, it uses the cached data key rather than generating a new one. Data key caching can improve performance, reduce cost, and help you stay within service limits as your application scales. 
 - KMS has SignAPI that create a digital signature for a message a using the private key in an asynmetric CMK
+- Redshift using KMS: The root key(KMS) encrypts the cluster key. The cluster key encrypts the database key. The database key encrypts the data encryption keys. Data encryption keys encrypt data blocks in the cluster.
+
+## CloudTrail 
+- 2 type of events: Data events and management events
+  - Data Evenst: show the resource operations performed on or within a resource in your AWS account. These operations are often high-volume activities.
+    - S3 object-level API activity
+    - Lambda function invocation activity
+    - DynamoDB object-level API activity on tables(PutItem, GetItem,...)
+- Management Events: show management operations that are performed on resources in your AWS account.
+  - Creating an S3 bucket
+  - Creating and managing IAM resources
+  - Configuring routing tables
+  - Setting up logging
+- 
 
 ## Network
 - Intrustion Dectection System: should be using a custom solution on the marketplaces
@@ -67,3 +81,5 @@
   - Create a hybrid activation, receive an Activation Code and Activation ID,
   - Install AWS System Manager SSM Agent on non-EC2 machine with that activation code
     - You can setup to rotate private key to strengthen security.
+- VPC Flow Logs does not contain package content.
+- It is possible to have different encyption keys for different verions of the same object in S3
