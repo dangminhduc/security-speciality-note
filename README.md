@@ -62,3 +62,8 @@
 - GuardDuty can perform an assetment of network communication and produce "CryptoCurrency:EC2/BitcoinTool.B" finding when an EC2 is querying an IP that associate with Bitcoin
     - The automation document will create a new instance and attach the original EBS volume create a new password. Then it will create a new AMI, then you can launch a new instance from it.
 - You can use groups to create a collection of users in a user pool, then set the permission for those users
+- Using System Manager on machine other than EC2
+  - Create an IAM service role
+  - Create a hybrid activation, receive an Activation Code and Activation ID,
+  - Install AWS System Manager SSM Agent on non-EC2 machine with that activation code
+    - You can setup to rotate private key to strengthen security.
