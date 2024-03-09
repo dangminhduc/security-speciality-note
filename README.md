@@ -34,7 +34,7 @@
   - Creating and managing IAM resources
   - Configuring routing tables
   - Setting up logging
-- 
+- To enable CloudTrail for all accounts under Organization, you only need to apply the trail to the Organization instead of all child accounts.
 
 ## Network
 - Intrustion Dectection System: should be using a custom solution on the marketplaces
@@ -43,7 +43,7 @@
 - IAM Usage report can be download via IAM credential report.
 - Using IAM Access Advisor or Access Management Access Analyzer to see what services have been used to not used for a period of time
 - ExternalId is a unique identifier that might be required when you assume a role in another account. If the administrator of the account to which the role belongs provided you with an external ID, then provide that value in the ExternalId parameter. This value can be any string, such as a passphrase or account number. A cross-account role is usually set up to trust everyone in an account. Therefore, the administrator of the trusting account might send an external ID to the administrator of the trusted account. That way, only someone with the ID can assume the role, rather than everyone in the account.
-- 
+- SSL Certificate can be imported via IAM in the region that doesn't support ACM
 
 ## Config
 - Basicly using AWS Config to track resources's changes.
@@ -95,3 +95,4 @@
     - RDS
     - S3
     - StepFunction
+- Using `aws:PrincipalOrgID` in IAM Policy to require all principals to access the resource from an account in the organization.
