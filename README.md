@@ -56,6 +56,7 @@
 ## VPC
 - Network ACL is stateless, which means it need both inbound and outbound rules for traffic
 - Security Groups is stateful, which mean it only need the rule to initiate the request, no need to have a rule for the returning traffic.
+- Security Group's changes is 
 
 ## Other
 - IAM role is needed to access Dynamo DB tables
@@ -83,3 +84,14 @@
     - You can setup to rotate private key to strengthen security.
 - VPC Flow Logs does not contain package content.
 - It is possible to have different encyption keys for different verions of the same object in S3
+- To authorize for API call made to API Gateway, we can use a lambda function to provide access control. Lambda use bearer token, athentication strategies such as OAuth or SAML, headers, query strings, context variables, etc
+- To encrypt data before sending it to S3 bucket, use client-side encryption
+  - The object stored in S3 aren't exposed to any 3rd party, including AWS(S3 only dectect it as typical objects)
+  - Lambda can be used response to API call from these service(config from Add Trigger setting)
+    - Auto-Scaling
+    - EC2
+      - Security Group changes
+    - Health
+    - RDS
+    - S3
+    - StepFunction
