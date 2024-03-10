@@ -96,3 +96,6 @@
     - S3
     - StepFunction
 - Using `aws:PrincipalOrgID` in IAM Policy to require all principals to access the resource from an account in the organization.
+- S3 Replication(both same and cross region) require bucket versioning.
+- You can create a private Certificate Authority(CA) via ACM. After filling in all requrired infomation, such as CA subject name, key algorithm, you can fully manage the private CA(expiration date)
+  - There is no ACM private CA policy. You need to use IAM policys to control who can access the CA
