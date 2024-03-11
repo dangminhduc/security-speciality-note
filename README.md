@@ -44,6 +44,8 @@
 - Using IAM Access Advisor or Access Management Access Analyzer to see what services have been used to not used for a period of time
 - ExternalId is a unique identifier that might be required when you assume a role in another account. If the administrator of the account to which the role belongs provided you with an external ID, then provide that value in the ExternalId parameter. This value can be any string, such as a passphrase or account number. A cross-account role is usually set up to trust everyone in an account. Therefore, the administrator of the trusting account might send an external ID to the administrator of the trusted account. That way, only someone with the ID can assume the role, rather than everyone in the account.
 - SSL Certificate can be imported via IAM in the region that doesn't support ACM
+- The AssumeRole API response contains temporary credentials to access AWS resources: Session Token, Secret Key, Access Key
+- When calling the AssumeRoleWithWebIdentity API, the session duration in the parameter can not be longer than the maximum value set in IAM Role
 
 ## Config
 - Basicly using AWS Config to track resources's changes.
@@ -99,3 +101,4 @@
 - S3 Replication(both same and cross region) require bucket versioning.
 - You can create a private Certificate Authority(CA) via ACM. After filling in all requrired infomation, such as CA subject name, key algorithm, you can fully manage the private CA(expiration date)
   - There is no ACM private CA policy. You need to use IAM policys to control who can access the CA
+- ALB and NLB support multiple certificates and smart certificate selection using Server Name Indication(SNI
