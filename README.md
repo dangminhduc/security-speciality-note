@@ -50,6 +50,7 @@
 ## Config
 - Basicly using AWS Config to track resources's changes.
 - Custom config rule can be trigger via resource's change events or periodically at maximum interval of 1 hour
+- When a Config rule become non-complaint, a runbook from AWS System Manager Automation can be executed as a remediation action(ex: Publish SNS notification, create an Jira issue)
 
 ## Cognito
 - Identity Pools can be use to give unauthenticated user to access AWS resources
@@ -101,4 +102,8 @@
 - S3 Replication(both same and cross region) require bucket versioning.
 - You can create a private Certificate Authority(CA) via ACM. After filling in all requrired infomation, such as CA subject name, key algorithm, you can fully manage the private CA(expiration date)
   - There is no ACM private CA policy. You need to use IAM policys to control who can access the CA
-- ALB and NLB support multiple certificates and smart certificate selection using Server Name Indication(SNI
+- ALB and NLB support multiple certificates and smart certificate selection using Server Name Indication(SNI)
+- To make GuardDuty ignore some IPs, add a custom trusted IP list and add it to GuardDuty via console.
+- Firewall Manager can be use to config WAF rules within the Organization.
+  - Apply a Firewall Manager WAF Policy to create a Web ACL in each account
+- HSM Module can be deployed in cluster that contains serveral HSMs in different AZ in an AWS region
