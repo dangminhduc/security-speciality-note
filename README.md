@@ -49,6 +49,7 @@
 
 ## Config
 - Basicly using AWS Config to track resources's changes.
+  - Rule is for complaint.
 - Custom config rule can be trigger via resource's change events or periodically at maximum interval of 1 hour
 - When a Config rule become non-complaint, a runbook from AWS System Manager Automation can be executed as a remediation action(ex: Publish SNS notification, create an Jira issue)
 
