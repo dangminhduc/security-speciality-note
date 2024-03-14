@@ -108,3 +108,5 @@
 - Firewall Manager can be use to config WAF rules within the Organization.
   - Apply a Firewall Manager WAF Policy to create a Web ACL in each account
 - HSM Module can be deployed in cluster that contains serveral HSMs in different AZ in an AWS region
+- In order to enable single sign-on to AWS, the 3rd party IdP should be configured to use AWS as aa relying party
+  - The AWS metadata URL "https://signin.aws.amazon.com/static/saml-metadata.xml" should be added in relying party config file.
