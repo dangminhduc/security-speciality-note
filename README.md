@@ -11,7 +11,7 @@
   - Use Decrypt API to decrypt the data key, then use the plaintext key to encrypt the data.
 - Auto rotation of KMS key is fixed at 365 days and can not be changed
 - To change the expiration of KMS key that use extenal material, you need to reimport the same key material and specify a new expiration date.
-- Step To import key material
+- Step to import key material
   - Create a KMS key with no key material(Origin set to EXTERNAL)
   - Download the wrapping public key and import token(valid only for 24 hours)
   - Encrypt the key material using the download public key and the wrapping algorithm that you specified.
@@ -25,7 +25,7 @@
 
 ## CloudTrail 
 - 2 type of events: Data events and management events
-  - Data Evenst: show the resource operations performed on or within a resource in your AWS account. These operations are often high-volume activities.
+  - Data Events: show the resource operations performed on or within a resource in your AWS account. These operations are often high-volume activities.
     - S3 object-level API activity
     - Lambda function invocation activity
     - DynamoDB object-level API activity on tables(PutItem, GetItem,...)
