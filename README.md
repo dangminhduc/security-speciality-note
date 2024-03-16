@@ -53,7 +53,7 @@
   - Rule is for complaint.
 - Custom config rule can be trigger via resource's change events or periodically at maximum interval of 1 hour
 - When a Config rule become non-complaint, a runbook from AWS System Manager Automation can be executed as a remediation action(ex: Publish SNS notification, create an Jira issue)
-- Security Hub leverages AWS Config(wit resource recording is turned on) to retrieve configuration data for AWS resources. It gains access to detailed information about resource configurations, allowing it to perform comprehensive security checks and assetment
+- Security Hub leverages AWS Config(with resource recording is turned on) to retrieve configuration data for AWS resources. It gains access to detailed information about resource configurations, allowing it to perform comprehensive security checks and assetment
 
 ## Cognito
 - Identity Pools can be use to give unauthenticated user to access AWS resources
@@ -62,7 +62,8 @@
 ## VPC
 - Network ACL is stateless, which means it need both inbound and outbound rules for traffic
 - Security Groups is stateful, which mean it only need the rule to initiate the request, no need to have a rule for the returning traffic.
-- Security Group's changes is 
+- Security Group's changes is can be use to trigger Lambda function
+  
 ## S3
 - It is possible to have different encyption keys for different verions of the same object in S3
 - S3 Replication(both same and cross region) require bucket versioning.
@@ -85,7 +86,7 @@
   - 3rd Party firewall policy
 - Firewall Manager can be use to config WAF rules within the Organization.
   - Apply a Firewall Manager WAF Policy to create a Web ACL in each account
-- Prequisites for AWS Firewall Manager
+- Prerequisites for AWS Firewall Manager
   - AWS account needs to be part of an organization within the AWS Organizations service.
   - AWS Config must be enabled in all of the AWS Organizations member accounts. Firewall Manager relies on AWS Config to evaluate the compliance status of your AWS resources against desired security policies.
   - Setup the Firewall Manager Administrator by using an administrator account
