@@ -35,6 +35,7 @@
   - Configuring routing tables
   - Setting up logging
 - To enable CloudTrail for all accounts under Organization, you only need to apply the trail to the Organization instead of all child accounts.
+- Global services like CloudFront, IAM, STS create their CloudTrail logs in US East Region.
 
 ## Network
 - Intrustion Dectection System: should be using a custom solution on the marketplaces
@@ -52,6 +53,7 @@
   - Rule is for complaint.
 - Custom config rule can be trigger via resource's change events or periodically at maximum interval of 1 hour
 - When a Config rule become non-complaint, a runbook from AWS System Manager Automation can be executed as a remediation action(ex: Publish SNS notification, create an Jira issue)
+- Security Hub leverages AWS Config(wit resource recording is turned on) to retrieve configuration data for AWS resources. It gains access to detailed information about resource configurations, allowing it to perform comprehensive security checks and assetment
 
 ## Cognito
 - Identity Pools can be use to give unauthenticated user to access AWS resources
@@ -61,6 +63,32 @@
 - Network ACL is stateless, which means it need both inbound and outbound rules for traffic
 - Security Groups is stateful, which mean it only need the rule to initiate the request, no need to have a rule for the returning traffic.
 - Security Group's changes is 
+## S3
+- It is possible to have different encyption keys for different verions of the same object in S3
+- S3 Replication(both same and cross region) require bucket versioning.
+- To encrypt data before sending it to S3 bucket, use client-side encryption
+  - The object stored in S3 aren't exposed to any 3rd party, including AWS(S3 only dectect it as typical objects)
+- S3 Object Lock
+  - Compliance mode: object can not be overwritten or delete by any user, including root user in AWS account.
+  - Governance mode: user can not overwrite or delete an object version or alter its lock settings unless they have special permissions. To override or remove governance-mode retention settings, you muse have the `s3:BypassGovernanceRetention` permission and must explictly include `x-amz-bypass-governance-retention:true` as a request header with any request.
+  - You can crate a legal hold on an object version. Like a retention period, a legal hold prevents an object version from being overwritten or deleted. However, a legal hold doesn't have an associated fixed amount of time and remains in effect until removed. Legal holds can be freely placed and removed by any user who has the s3:PutObjectLegalHold permission. Legal holds are independent from retention periods. Placing a legal hold on an object version doesn't affect the retention mode or retention period for that object version. 
+- You can use Macie, to create and run sensitive data discovery jobs to automate discovery, logging and reporting of sensitive data in S3 buckets
+  - Amazon Macie is a data security service that discovers sensitive data by using machine learning and pattern matching, provides visibility into data security risks, and enables automated protection against those risks
+
+## Firewall Manager
+- Firewall Manager provides following types of policies
+  - WAF Policy
+  - Shield Advance policy
+  - Security Group policy
+  - Network Firewall policy
+  - Route53 Resolver DNS Firewall policy
+  - 3rd Party firewall policy
+- Firewall Manager can be use to config WAF rules within the Organization.
+  - Apply a Firewall Manager WAF Policy to create a Web ACL in each account
+- Prequisites for AWS Firewall Manager
+  - AWS account needs to be part of an organization within the AWS Organizations service.
+  - AWS Config must be enabled in all of the AWS Organizations member accounts. Firewall Manager relies on AWS Config to evaluate the compliance status of your AWS resources against desired security policies.
+  - Setup the Firewall Manager Administrator by using an administrator account
 
 ## Other
 - IAM role is needed to access Dynamo DB tables
@@ -87,26 +115,25 @@
   - Install AWS System Manager SSM Agent on non-EC2 machine with that activation code
     - You can setup to rotate private key to strengthen security.
 - VPC Flow Logs does not contain package content.
-- It is possible to have different encyption keys for different verions of the same object in S3
 - To authorize for API call made to API Gateway, we can use a lambda function to provide access control. Lambda use bearer token, athentication strategies such as OAuth or SAML, headers, query strings, context variables, etc
-- To encrypt data before sending it to S3 bucket, use client-side encryption
-  - The object stored in S3 aren't exposed to any 3rd party, including AWS(S3 only dectect it as typical objects)
-  - Lambda can be used response to API call from these service(config from Add Trigger setting)
-    - Auto-Scaling
-    - EC2
-      - Security Group changes
-    - Health
-    - RDS
-    - S3
-    - StepFunction
+- Lambda can be used response to API call from these service(config from Add Trigger setting)
+  - Auto-Scaling
+  - EC2
+    - Security Group changes
+  - Health
+  - RDS
+  - S3
+  - StepFunction
 - Using `aws:PrincipalOrgID` in IAM Policy to require all principals to access the resource from an account in the organization.
-- S3 Replication(both same and cross region) require bucket versioning.
 - You can create a private Certificate Authority(CA) via ACM. After filling in all requrired infomation, such as CA subject name, key algorithm, you can fully manage the private CA(expiration date)
   - There is no ACM private CA policy. You need to use IAM policys to control who can access the CA
 - ALB and NLB support multiple certificates and smart certificate selection using Server Name Indication(SNI)
 - To make GuardDuty ignore some IPs, add a custom trusted IP list and add it to GuardDuty via console.
-- Firewall Manager can be use to config WAF rules within the Organization.
-  - Apply a Firewall Manager WAF Policy to create a Web ACL in each account
+- AWS Backup Vault is a container that is responsible for storing and organizing backups with encryption. In addtion, Vault Lock provides extra layer of security(Compliance Mode and Governance Mode)
 - HSM Module can be deployed in cluster that contains serveral HSMs in different AZ in an AWS region
 - In order to enable single sign-on to AWS, the 3rd party IdP should be configured to use AWS as aa relying party
   - The AWS metadata URL "https://signin.aws.amazon.com/static/saml-metadata.xml" should be added in relying party config file.
+- Control Tower behavior:
+  - Preventive: A preventive control ensures that your accounts maintain compliance, because it disallows actions that lead to policy violations. The status of a preventive control is either enforced or not enabled. Preventive controls are supported in all AWS Regions. Implement via SCP.
+  - Detective: A detective control detects noncompliance of resources within your accounts, such as policy violations, and provides alerts through the dashboard. The status of a detective control is either clear, in violation, or not enabled. Detective controls apply only in those AWS Regions supported by AWS Control Tower. Implement via AWS Config rules
+  - Proactive: A proactive control scans your resources before they are provisioned, and makes sure that the resources are compliant with that control. Resources that are not compliant will not be provisioned. Proactive controls are implemented by means of AWS CloudFormation hooks, and they apply to resources that would be provisioned by AWS CloudFormation. The status of a proactive control is PASS, FAIL, or SKIP. Implement via CloudFormation hooks
